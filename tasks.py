@@ -16,7 +16,7 @@ import numpy as np
 # -----------------------------------------------
 
 def compute_output_size_1d(input_array, kernel_array):
-    pass
+    return (len(input_array) - len(kernel_array) + 1)
 
 
 # -----------------------------------------------
@@ -36,8 +36,12 @@ print(compute_output_size_1d(input_array, kernel_array))
 
 def convolve_1d(input_array, kernel_array):
     # Tip: start by initializing an empty output array (you can use your function above to calculate the correct size).
+    convolution_size = compute_output_size_1d(input_array, kernel_array)
+    output_array = np.zeros(convolution_size)
     # Then fill the cells in the array with a loop.
-    pass
+    for i in range(convolution_size):
+        output_array[i] = np.sum(input_array[i:i+convolution_size] * kernel_array)
+    return output_array
 
 # -----------------------------------------------
 # Another tip: write test cases like this, so you can easily test your function.
@@ -56,7 +60,9 @@ print(convolve_1d(input_array, kernel_array))
 # -----------------------------------------------
 
 def compute_output_size_2d(input_matrix, kernel_matrix):
-    pass
+    output_height = len(input_matrix) - len(kernel_matrix) + 1
+    output_width = len(input_matrix[0]) - len(kernel_matrix[0]) + 1
+    return (output_height, output_width)
 
 
 # -----------------------------------------------
@@ -72,7 +78,12 @@ def compute_output_size_2d(input_matrix, kernel_matrix):
 def convolute_2d(input_matrix, kernel_matrix):
     # Tip: same tips as above, but you might need a nested loop here in order to
     # define which parts of the input matrix need to be multiplied with the kernel matrix.
-    pass
+    output_size = compute_output_size_2d(input_matrix, kernel_matrix)
+    output_matrix = np.zeros(output_size)
+    for i in range(output_size[0]):
+        for j in range(output_size[1]):
+            output_matrix[i][j] = np.sum(input_matrix[i:i+output_size[0], j:j+output_size[1]] * kernel_matrix)
+    return output_matrix
 
 
 # -----------------------------------------------
